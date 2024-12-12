@@ -22,7 +22,7 @@ class RegisteredAction(BaseModel):
 		s += str(
 			{
 				k: {sub_k: sub_v for sub_k, sub_v in v.items() if sub_k not in skip_keys}
-				for k, v in self.param_model.schema()['properties'].items()
+				for k, v in self.param_model.model_json_schema()['properties'].items()
 			}
 		)
 		s += '}'
