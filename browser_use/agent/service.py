@@ -10,12 +10,12 @@ import time
 import uuid
 from pathlib import Path
 from typing import Any, Optional, Type, TypeVar
-
 from dotenv import load_dotenv
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import (
 	BaseMessage,
 	SystemMessage,
+ 	HumanMessage,
 )
 from openai import RateLimitError
 from PIL import Image, ImageDraw, ImageFont
@@ -260,7 +260,8 @@ class Agent:
 		"""Get next action from LLM based on current state"""
 
 		structured_llm = self.llm.with_structured_output(self.AgentOutput, include_raw=True)
-		response: dict[str, Any] = await structured_llm.ainvoke(input_messages)  # type: ignore
+		input_messages_validate_task = input_messages + [HumanMessage(content=self.system_prompt_class.validate_ultimate_task(task=self.task))]
+		response: dict[str, Any] = await structured_llm.ainvoke(input_messages_validate_task)  # type: ignore
 
 		parsed: AgentOutput = response['parsed']
 		# cut the number of actions to max_actions_per_step

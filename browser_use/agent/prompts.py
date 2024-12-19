@@ -15,6 +15,19 @@ class SystemPrompt:
 		self.current_date = current_date
 		self.max_actions_per_step = max_actions_per_step
 
+	@staticmethod
+	def validate_ultimate_task(task: str) -> str:
+		"""
+		Returns the prompt to validate the ultimate task.
+
+		Args:
+		    task (str): Task to validate
+
+		Returns:
+		    str: Validate task prompt
+		"""
+		return f"Your ultimate task is: {task}. If you achieved your ultimate task, stop everything and use the done action in the next step to complete the task. If not, continue as usual."
+ 
 	def important_rules(self) -> str:
 		"""
 		Returns the important rules for the agent.
