@@ -41,7 +41,7 @@ class BrowserConfig:
 			e.g. '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 	"""
 
-	headless: bool = False
+	headless: bool = True
 	disable_security: bool = True
 	extra_chromium_args: list[str] = field(default_factory=list)
 	chrome_instance_path: str | None = None
